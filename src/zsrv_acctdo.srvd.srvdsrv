@@ -1,0 +1,4 @@
+@EndUserText.label: 'ZSRV_ACCTDO'
+define service ZSRV_ACCTDO {
+  expose ZCDS_ACCO;
+}
