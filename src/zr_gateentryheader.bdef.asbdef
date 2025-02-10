@@ -1,0 +1,175 @@
+managed;
+strict;
+
+define behavior for ZR_GateEntryHeader alias GateEntryHeader
+implementation in class zbp_r_gateentryheader unique
+persistent table zgateentryheader
+lock master
+early numbering
+authorization master ( global, instance )
+etag master LastChangedAt
+{
+  field ( readonly )
+   CreatedBy,
+   CreatedAt,
+   LastChangedAt,
+   LastChangedBy,
+   Totallines;
+
+  field ( readonly )
+   Gateentryno;
+
+  field ( mandatory ) Entrytype, Vehicleno, Drivername, Invoiceno, Invoicedate,Driverno;
+
+  action( features : instance ) cancelGateEntry    result [1] $self;
+  action cancelMultiple;
+  determination changeValues on modify { field Entrytype; }
+//  validation validateMandatory on save { field Vehicleno, Plant, Entrytype; create; update;}
+  validation validateMandatory on save { field Vehicleno, Entrytype; create; update;}
+  internal action ReCalcTotals;
+
+  create ( precheck );
+  update ( precheck );
+  delete;
+
+  mapping for zgateentryheader
+  {
+    Gateentryno             = GATEENTRYNO;
+    Entrydate               = ENTRYDATE;
+//    Plant                   = PLANT;
+    Gateoutward             = GATEOUTWARD;
+    Entrytype               = ENTRYTYPE;
+    Operatorname            = OPERATORNAME;
+    Transportmode           = TRANSPORTMODE;
+    Grdate                  = GRDATE;
+    Grno                    = GRNO;
+    Vehicleno               = VEHICLENO;
+    Vehrepdate              = VEHREPDATE;
+    vehreptime              = VEHREPTIME;
+    Gateindate              = GATEINDATE;
+    Gateintime              = GATEINTIME;
+    Transportername         = TRANSPORTERNAME;
+    Drivername              = DRIVERNAME;
+    Driverlicenseno         = DRIVERLICENSENO;
+    Driverno                = DRIVERNO;
+    Gateoutdate             = GATEOUTDATE;
+    Gateouttime             = GATEOUTTIME;
+    Remarks                 = REMARKS;
+    Grosswt                 = GROSSWT;
+    Tarewt                  = TAREWT;
+    Netwt                   = NETWT;
+    Slipno                  = SLIPNO;
+    Cancelled               = CANCELLED;
+    Invoiceno               = INVOICENO;
+    Invoicedate             = INVOICEDATE;
+    Lrno                    = LRNO;
+    Lrdate                  = LRDATE;
+    Gateno                  = GATENO;
+    Billamount              = BILLAMOUNT;
+    Purpose                 = PURPOSE;
+    Weighbridgereq          = WEIGHBRIDGEREQ;
+    Preweight               = PREWEIGHT;
+    presamplereq            = PRESAMPLEREQ;
+    Vehiclergnno            = VEHICLERGNNO;
+    Insurancevalidity       = INSURANCEVALIDITY;
+    Insuranceno             = INSURANCENO;
+    Pucvalidity             =  PUCVALIDITY;
+    Pucno                   =  PUCNO;
+    Carryingcapacity        =  CARRYINGCAPACITY;
+    Transporterbulitylr     =  TRANSPORTERBULITYLR;
+    Looseiteminbody         =  LOOSEITEMINBODY;
+    Looseitemincabn         =  LOOSEITEMINCABN;
+    Fcno                    =  FCNO;
+    Fcvalidity              =  FCVALIDITY;
+    Alcoholconditiondriver  =  ALCOHOLCONDITIONDRIVER;
+    Stocktransferinv        =  STOCKTRANSFERINV;
+    Refdocno                =  REFDOCNO;
+    Wbrgslipno              =  WBRGSLIPNO;
+    Supewaybillno           =  SUPEWAYBILLNO;
+    Supdlchallan            =  SUPDLCHALLAN;
+    Stocktransferchallan    =  STOCKTRANSFERCHALLAN;
+    Vehicleinsurance        =  VEHICLEINSURANCE;
+    Vehiclerc               =  VEHICLERC;
+    Vehiclepuc              =  VEHICLEPUC;
+    Drvierlicense           =  DRVIERLICENSE;
+    Transporterlr           =  TRANSPORTERLR;
+    CreatedBy = CREATED_BY;
+    CreatedAt = CREATED_AT;
+    LastChangedBy = LAST_CHANGED_BY;
+    LastChangedAt = LAST_CHANGED_AT;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+  }
+
+  association _GateEntryLines { create; }
+}
+
+define behavior for ZR_GateEntryLines alias GateEntryLines
+implementation in class zbp_r_gateentrylines unique
+persistent table zgateentrylines
+early numbering
+lock dependent by _GateEntryHeader
+authorization dependent by _GateEntryHeader
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) Gateentryno, Gateitemno;
+
+  field ( readonly : update )
+  Productcode;
+
+  determination updateLines on save { field Vendorcode; }
+
+  determination calculateTotals on modify { field Gateqty; }
+
+  side effects
+  {
+    field Gateqty affects field _GateEntryHeader.Totallines;
+//    action Apply_Discount affects field _Travel.TotalPrice ;
+  }
+
+  mapping for zgateentrylines
+  {
+    Gateentryno = GATEENTRYNO;
+    Gateitemno  = GATEITEMNO;
+//    Vendorcode = VENDORCODE;
+//    Vendorname = VENDORNAME;
+//    Customercode = CUSTOMERCODE;
+//    Customername = CUSTOMERNAME;
+//    Productcode = PRODUCTCODE;
+//    Productdesc = PRODUCTDESC;
+//    Entrytype = ENTRYTYPE;
+//    Documentno = DOCUMENTNO;
+//    Documentitem = DOCUMENTITEM;
+//    Documentqty = DOCUMENTQTY;
+//    Uom = UOM;
+//    Gateqty = GATEQTY;
+//    Gatevalue = GATEVALUE;
+//    Remarks = REMARKS;
+Plant          =  PLANT;
+Sloc           =  SLOC;
+Vendorcode     =  VENDORCODE;
+Vendorname     =  VENDORNAME;
+Vendorcity     =  VENDORCITY;
+Customercode   =  CUSTOMERCODE;
+Customername   =  CUSTOMERNAME;
+Productcode    =  PRODUCTCODE;
+Productdesc    =  PRODUCTDESC;
+Entrytype      =  ENTRYTYPE;
+Documentno     =  DOCUMENTNO;
+Documentitem   =  DOCUMENTITEM;
+Documentqty    =  DOCUMENTQTY;
+Uom            =  UOM;
+Gateqty        =  GATEQTY;
+Gatevalue      =  GATEVALUE;
+billedparcelqy =  BILLEDPARCELQY;
+Itemwt         =  ITEMWT;
+Insplot        =  INSPLOT;
+Qualityok      =  QUALITYOK;
+Matsno         =  MATSNO;
+Remarks        =  REMARKS;
+
+  }
+
+  association _GateEntryHeader;
+}

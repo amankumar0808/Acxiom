@@ -1,0 +1,396 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'GateEntryHeader', 
+    typeNamePlural: 'GateEntryHeaders', 
+    title: {
+      type: #STANDARD, 
+      label: 'GateEntryHeader', 
+      value: 'Gateentryno'
+    }
+  }, 
+  presentationVariant: [ {
+    sortOrder: [ {
+      by: 'Gateentryno', 
+      direction: #DESC
+    } ], 
+    visualizations: [ {
+      type: #AS_LINEITEM
+    } ]
+  } ]
+}
+
+annotate entity ZC_GateEntryHeader
+    with 
+{
+  @UI.facet: [ {
+    id: 'idCollection', 
+    type: #COLLECTION, 
+    label: 'GateEntryHeader', 
+    position: 10 
+  }, 
+  {
+    id: 'idIdentification', 
+    parentId: 'idCollection', 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'General Information', 
+    position: 20 
+  }, 
+  {
+    id: 'idGateEntryLines', 
+    type: #LINEITEM_REFERENCE, 
+    label: 'GateEntryLines', 
+    position: 30 , 
+    targetElement: '_GateEntryLines'
+  } ]
+  
+  @UI.lineItem: [ {
+    position: 10 , 
+      label: 'Cancle Multiple',
+      type: #FOR_ACTION,
+      dataAction: 'cancelMultiple',
+      invocationGrouping: #CHANGE_SET,
+    importance: #HIGH
+  } ]
+  @UI.identification: [ {
+    position: 10 
+  } ]
+  @UI.selectionField: [ {
+    position: 10 
+  } ]
+  Gateentryno;
+
+  @UI.lineItem: [ {
+    position: 20 , 
+    importance: #HIGH, 
+    label: 'Entry Date'
+  } ]
+  @UI.identification: [ {
+    position: 20 , 
+    label: 'Entrydate'
+  } ]
+  Entrydate;
+  
+    @UI.lineItem: [ {
+    position: 30 , 
+    importance: #HIGH, 
+    label: 'Plant'
+  } ]
+  @UI.identification: [ {
+    position: 30 , 
+    label: 'Plant'
+  } ]
+  Plant;
+  
+  @UI.hidden: true
+  Gateoutward;
+  
+  @UI.lineItem: [ {
+    position: 40 , 
+    importance: #HIGH, 
+    label: 'Entry Type'
+  } ]
+  @UI.identification: [ {
+    position: 40 , 
+    label: 'Entrytype'
+  } ]
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_GateEntryType', element: 'Value' },
+  distinctValues: true,
+  additionalBinding: [{ localElement: 'Gateentrytypedesc', element: 'Description', usage: #FILTER_AND_RESULT }]
+   }]
+  Entrytype;
+  
+  @UI.lineItem: [ {
+    position: 45 , 
+    importance: #HIGH, 
+    label: 'Entry Type Desc'
+  } ]
+  @UI.identification: [ {
+    position: 45 , 
+    label: 'Entry Type Desc'
+  } ]
+  Gateentrytypedesc;
+  
+  @UI.lineItem: [ {
+    position: 50 , 
+    importance: #HIGH, 
+    label: 'Operator Name'
+  } ]
+  @UI.identification: [ {
+    position: 50 , 
+    label: 'Operatorname'
+  } ]
+  Operatorname;
+  
+  @UI.lineItem: [ {
+    position: 60 , 
+    importance: #HIGH, 
+    label: 'Mode of Transport'
+  } ]
+  @UI.identification: [ {
+    position: 60 , 
+    label: 'Transportmode'
+  } ]
+  Transportmode;
+  
+  @UI.lineItem: [ {
+    position: 70 , 
+    importance: #HIGH, 
+    label: 'GR No.'
+  } ]
+  @UI.identification: [ {
+    position: 70 , 
+    label: 'Grno'
+  } ]
+  Grno;
+  
+  @UI.lineItem: [ {
+    position: 80 , 
+    importance: #HIGH, 
+    label: 'GR Date'
+  } ]
+  @UI.identification: [ {
+    position: 80 , 
+    label: 'Grdate'
+  } ]
+  Grdate;
+  
+  @UI.lineItem: [ {
+    position: 90 , 
+    importance: #HIGH, 
+    label: 'Invoiceno'
+  } ]
+  @UI.identification: [ {
+    position: 90 , 
+    label: 'Invoiceno'
+  } ]
+  Invoiceno;
+  
+  @UI.lineItem: [ {
+    position: 100 , 
+    importance: #HIGH, 
+    label: 'Invoicedate'
+  } ]
+  @UI.identification: [ {
+    position: 100 , 
+    label: 'Invoicedate'
+  } ]
+  Invoicedate;
+  
+  @UI.lineItem: [ {
+    position: 110 , 
+    importance: #HIGH, 
+    label: 'Vehicleno'
+  } ]
+  @UI.identification: [ {
+    position: 110 , 
+    label: 'Vehicleno'
+  } ]
+  Vehicleno;
+  
+  @UI.lineItem: [ {
+    position: 120 , 
+    importance: #HIGH, 
+    label: 'Gateindate'
+  } ]
+  @UI.identification: [ {
+    position: 120 , 
+    label: 'Gateindate'
+  } ]
+  Gateindate;
+  
+  @UI.lineItem: [ {
+    position: 120 , 
+    importance: #HIGH, 
+    label: 'Gateintime'
+  } ]
+  @UI.identification: [ {
+    position: 120 , 
+    label: 'Gateintime'
+  } ]
+  Gateintime;
+  
+  @UI.lineItem: [ {
+    position: 130 , 
+    importance: #HIGH, 
+    label: 'Transportername'
+  } ]
+  @UI.identification: [ {
+    position: 130 , 
+    label: 'Transportername'
+  } ]
+  Transportername;
+  
+  @UI.lineItem: [ {
+    position: 140 , 
+    importance: #HIGH, 
+    label: 'Drivername'
+  } ]
+  @UI.identification: [ {
+    position: 140 , 
+    label: 'Drivername'
+  } ]
+  Drivername;
+  
+  @UI.lineItem: [ {
+    position: 150 , 
+    importance: #HIGH, 
+    label: 'Driverlicenseno'
+  } ]
+  @UI.identification: [ {
+    position: 150 , 
+    label: 'Driverlicenseno'
+  } ]
+  Driverlicenseno;
+    
+  @UI.lineItem: [ {
+    position: 160 , 
+    importance: #HIGH, 
+    label: 'Driverno'
+  } ]
+  @UI.identification: [ {
+    position: 160 , 
+    label: 'Driverno'
+  } ]
+  Driverno;
+  
+  @UI.lineItem: [ {
+    position: 170 , 
+    importance: #HIGH, 
+    label: 'Gateoutdate'
+  } ]
+  @UI.identification: [ {
+    position: 170 , 
+    label: 'Gateoutdate'
+  } ]
+  Gateoutdate;
+    
+  @UI.lineItem: [ {
+    position: 180 , 
+    importance: #HIGH, 
+    label: 'Gateouttime'
+  } ]
+  @UI.identification: [ {
+    position: 180 , 
+    label: 'Gateouttime'
+  } ]
+  Gateouttime;
+  
+  @UI.lineItem: [ {
+    position: 190 , 
+    importance: #HIGH, 
+    label: 'Remarks'
+  } ]
+  @UI.identification: [ {
+    position: 190 , 
+    label: 'Remarks'
+  } ]
+  Remarks;
+  
+  @UI.lineItem: [ {
+    position: 200 , 
+    importance: #HIGH, 
+    label: 'Grosswt'
+  } ]
+  @UI.identification: [ {
+    position: 200 , 
+    label: 'Grosswt'
+  } ]
+  Grosswt;
+  
+  @UI.lineItem: [ {
+    position: 210 , 
+    importance: #HIGH, 
+    label: 'Tarewt'
+  } ]
+  @UI.identification: [ {
+    position: 210 , 
+    label: 'Tarewt'
+  } ]
+  Tarewt;
+  
+  @UI.lineItem: [ {
+    position: 220 , 
+    importance: #HIGH, 
+    label: 'Netwt'
+  } ]
+  @UI.identification: [ {
+    position: 220 , 
+    label: 'Netwt'
+  } ]
+  Netwt;
+  
+  @UI.lineItem: [ {
+    position: 230 , 
+    importance: #HIGH, 
+    label: 'Slipno'
+  } ]
+  @UI.identification: [ {
+    position: 230 , 
+    label: 'Slipno'
+  } ]
+  Slipno;
+   
+  @UI.lineItem: [ {
+    position: 232 , 
+    importance: #HIGH, 
+    label: 'Number of Lines'
+  } ]
+  @UI.identification: [ {
+    position: 232 , 
+    label: 'Number of Lines'
+  } ]
+  Totallines;
+ 
+  @UI.lineItem: [ {
+    position: 235 , 
+    importance: #HIGH, 
+    label: 'Time Difference'
+  } ]
+  @UI.identification: [ {
+    position: 235 , 
+    label: 'Time Difference'
+  } ]
+  Timedifference;
+  
+  @UI.lineItem: [ {
+    position: 240 , 
+    importance: #HIGH, 
+    label: 'Cancelled'
+  }, { type: #FOR_ACTION, dataAction: 'cancelGateEntry', label: 'Cancel Gate Entry' } ]
+  @UI.identification: [ {
+    position: 240 , 
+    label: 'Cancelled'
+  }, { type: #FOR_ACTION, dataAction: 'cancelGateEntry', label: 'Cancel Gate Entry' } ]
+  Cancelled;
+    
+  
+  @UI.lineItem: [ {
+    position: 300 , 
+    importance: #HIGH, 
+    label: 'Creationdate'
+  } ]
+  @UI.identification: [ {
+    position: 300 , 
+    label: 'Creationdate'
+  } ]
+  CreatedAt;
+  
+  @UI.lineItem: [ {
+    position: 310 , 
+    importance: #HIGH, 
+    label: 'Creationtime'
+  } ]
+  @UI.identification: [ {
+    position: 310 , 
+    label: 'Creationtime'
+  } ]
+  CreatedBy;
+  
+  @UI.hidden: true
+  LastChangedBy;
+  
+  @UI.hidden: true
+  LastChangedAt;
+  
+}
